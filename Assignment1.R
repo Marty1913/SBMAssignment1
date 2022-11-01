@@ -26,7 +26,7 @@ new$Project_description <- tolower(new$Project_description)
 
 Dictionary_Physical <- c("boardgame", "shipping")
 Dictionary_Digital <- c("videogame")
-# Dictionary_Other <- c("blue")
+Dictionary_Other <- c("blue")
 
 pattern_Physical <- paste(Dictionary_Physical, collapse = "|")
 pattern_Digital <- paste(Dictionary_Digital, collapse = "|")
