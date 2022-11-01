@@ -36,6 +36,3 @@ new$CountOfPhysical <- str_count(new$Project_description, regex(pattern_Physical
 new$CountOfDigital <- str_count(new$Project_description, regex(pattern_Digital))
   
 new$TypeOfProject <- ifelse(new$CountOfPhysical > new$CountOfDigital, "Physical", "Digital")
-
-
-test <-123
