@@ -24,6 +24,10 @@ new$goal_reached <- new$Pledge_USD > new$Goal_USD
 new$Project_description <- tolower(new$Project_description)
 
 
+Category_filter_digital <- c("Digital Art", "Webcomics", "Action", "Animation", "Comedy", "Documentary", "Drama", "Experimental", "Family", "Fantasy", "")
+Category_filter_physical <- c("Accessories", "Apparel", "Childrenswear", "Couture", "Footwear", "Jewelry", "Pet Fashion", "Ready-to-wear","Toys", "Illustration", "Installation", "Painting", "Sculpture", "Textiles", "Anthologies", "Comic Books", "Graphic Novels", "Candles", "Crochet", "DIY", "Embroidery", "Glass", "Knitting", "Pottery", "Printing", "Quilts", "Stationery", "Taxidermy", "Weaving", "Woodworking", )
+Category_filter_other <- c("Social Practice", "Events", "Performances", "Residencies", "Spaces", "Workshops", "Festivals" )
+
 Dictionary_Physical <- c("boardgame", "shipping")
 Dictionary_Digital <- c("videogame")
 Dictionary_Other <- c("blue")
