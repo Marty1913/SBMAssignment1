@@ -94,11 +94,11 @@ ToP <- relevel(ToP, ref = 2)
 levels(ToP)
 levels(new$TypeOfProject)
 
-splitfactor(ToP)
-
 colnames(new)
 
-model <- lm(new$goal_reached ~ ToP, data = new)
+new$Category
+
+model <- lm(new$goal_reached ~ ToP + Category, data = new)
 summary(model)
 # 
 # removed_outlier <- new[new$goal_reached < 10000 & new$goal_reached > -10000,]
