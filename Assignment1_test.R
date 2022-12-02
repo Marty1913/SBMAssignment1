@@ -3,7 +3,7 @@ library(stringr)
 library(ggplot2)
 library(rpart.plot)
 
-filenames <- list.files("C:/Users/Faysal el Kaaoichi/Downloads/Kickstarter/2019_week19", pattern="*.rds", full.names=TRUE)
+filenames <- list.files("Kickstarter/2019_week19", pattern="*.rds", full.names=TRUE)
 ldf <- lapply(filenames, readRDS)
 
 
@@ -100,6 +100,17 @@ new$Category
 
 model <- lm(new$goal_reached ~ ToP + Category, data = new)
 summary(model)
+
+
+
+model2 <- lm(new$goal_reached ~ ., data = new)
+summary(model2)
+
+sample <- sample(nrow(new),1000)
+new_sample <- new[sample,]
+model3_sample <- lm(goal_reached ~ TypeOfProject, data = new_sample)
+summary(model3_sample)
+
 # 
 # removed_outlier <- new[new$goal_reached < 10000 & new$goal_reached > -10000,]
 # 
