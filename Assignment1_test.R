@@ -3,7 +3,7 @@ library(stringr)
 library(ggplot2)
 library(rpart.plot)
 
-filenames <- list.files("Kickstarter/2019_week19", pattern="*.rds", full.names=TRUE)
+filenames <- list.files("Kickstarter/2019_week32", pattern="*.rds", full.names=TRUE)
 ldf <- lapply(filenames, readRDS)
 
 
@@ -19,7 +19,7 @@ new$Goal_USD
 new$Pledge_USD
 
 diff_amt <- as.numeric(new$Goal_USD) - as.numeric(new$Pledge_USD)
-diff_amt
+#diff_amt
 
 
 
@@ -75,14 +75,14 @@ new$TypeOfProject <- ifelse((new$CountOfPhysical > new$CountOfDigital) & (new$Co
 
 table <- table(new$TypeOfProject, new$goal_reached)
 
-chi2 = chisq.test(table, correct=F)
+#chi2 = chisq.test(table, correct=F)
 
-chi2
-c(chi2$statistic, chi2$p.value)
+#chi2
+#c(chi2$statistic, chi2$p.value)
 # sqrt(chi2$statistic / sum(table))
 
-train <- new[ind == 1,]
-test <- new[ind == 2,]
+#train <- new[ind == 1,]
+#test <- new[ind == 2,]
 
 #tree <- rpart::rpart(goal_reached ~ TypeOfProject + Goal_USD + Category, data = train, cp = 0.01)
 #rpart.plot(tree)
@@ -98,21 +98,37 @@ colnames(new)
 
 new$Category
 
-model <- lm(new$goal_reached ~ ToP + Category, data = new)
-summary(model)
+#model <- lm(new$goal_reached ~ ToP + Category, data = new)
+#summary(model)
 
 
 
-model2 <- lm(new$goal_reached ~ ., data = new)
-summary(model2)
+#model2 <- lm(new$goal_reached ~ ., data = new)
+#summary(model2)
 
-sample <- sample(nrow(new),1000)
-new_sample <- new[sample,]
-model3_sample <- lm(goal_reached ~ TypeOfProject, data = new_sample)
-summary(model3_sample)
+#sample <- sample(nrow(new),1000)
+#new_sample <- new[sample,]
+#model3_sample <- lm(goal_reached ~ TypeOfProject, data = new_sample)
+#summary(model3_sample)
 
-# 
+sink("lmtotal.txt")
+modelf <- lm(dfc$goal_reached ~ ToP + Category + Goal_USD, data = dfc)
+summary(modelf)
+sink()
+## 
 # removed_outlier <- new[new$goal_reached < 10000 & new$goal_reached > -10000,]
 # 
 # ggplot(removed_outlier, aes(x=TypeOfProject, y= goal_reached)) +
 #  geom_jitter()
+
+new32 <- new
+
+
+dfc <- rbind(dfc, new32)
+
+class(dfc$TypeOfProject)
+
+ToP <- as.factor(dfc$TypeOfProject)
+ToP <- relevel(ToP, ref = 2)
+levels(ToP)
+levels(dfc$TypeOfProject)
