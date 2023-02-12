@@ -2,7 +2,8 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 library(rpart.plot)
-
+library(car)
+library(interactions)
 # Opening and loading in data.
 filenames <- list.files("Kickstarter/2019_week19", pattern="*.rds", full.names=TRUE)
 ldf <- lapply(filenames, readRDS)
@@ -82,7 +83,6 @@ ggplot(new_v2, aes(x=goal_reached)) + geom_histogram() +
 
 new_v2$factor_ToP <- as.factor(new_v2$TypeOfProject)
 new_v2$factor_Cat <- as.factor(new_v2$Category)
-
 new_v2$factor_ToP = relevel(new_v2$factor_ToP, ref="Other")
 
 model1 <- lm(goal_reached ~ factor_ToP, data = new_v2)
@@ -90,9 +90,17 @@ summary(model1)
 
 model2 <- lm(goal_reached ~ factor_ToP + lenDescription + Goal_USD, data = new_v2)
 summary(model2)
+interact_plot(model2, pred = Goal_USD, modx = factor_ToP)
+interact_plot(model2, pred = lenDescription, modx = factor_ToP)
 
-model3 <- lm(goal_reached ~ factor_ToP + lenDescription + Goal_USD + Category, data = new_v2)
+model3 <- lm(goal_reached ~ factor_ToP + lenDescription + Goal_USD + factor_Cat, data = new_v2)
 summary(model3)
+
+tab <- matrix(c(AIC(model1), BIC(model1), AIC(model2), BIC(model2), AIC(model2), BIC(model2)), ncol=2, byrow=TRUE)
+colnames(tab) <- c('AIC','BIC')
+rownames(tab) <- c('Model 1','Model 2','Model 3')
+tab <- as.table(tab)
+tab
 
 # sample <- sample(nrow(new),1000)
 # new_sample <- new[sample,]
